@@ -268,3 +268,5 @@ venv.bak/
 dump.json
 fixture.json
 .pytest_cache
+.vscode/
+.pytest_cache
