@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("updated", models.DateTimeField(auto_now=True)),
                 ("description", models.CharField(max_length=64)),
-                ("notes", models.TextField(default="", max_length=1024)),
+                ("notes", models.TextField(blank=True, default="", max_length=1024)),
                 ("deadline", models.DateTimeField(blank=True, null=True)),
                 (
                     "user",
