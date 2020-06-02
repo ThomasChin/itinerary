@@ -3,8 +3,11 @@ version: "3"
 services:
   db:
     image: postgres
+
   web:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile.web
     command: python manage.py runserver 0.0.0.0:8000
     env_file:
       - dev.env
@@ -14,3 +17,21 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    command: npm run serve
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - '8080:8080'
+    tty: true
+    stdin_open: true
+    volumes:
+      - './frontend/src/:/usr/src/itinerary/frontend/src/'
+      - './frontend/public/:/usr/src/itinerary/frontend/public/'
+      - './frontend/package.json:/usr/src/itinerary/frontend/package.json'
+      - './frontend/package-lock.json:/usr/src/itinerary/frontend/package-lock.json'
+      - './frontend/babel.config.js:/usr/src/itinerary/frontend/babel.config.js'
