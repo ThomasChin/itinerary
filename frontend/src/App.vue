@@ -1,17 +1,40 @@
 <template>
-  <div id="app">
+  <div id="app" class="small-container">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to chillis. When you're here, you're go to appplebeez" />
+    <todo-table v-bind:todos="todos" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import TodoTable from "./components/TodoTable.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    TodoTable
+  },
+
+  data() {
+    return {
+      todos: []
+    };
+  },
+
+  mounted() {
+    this.getTodos();
+  },
+
+  methods: {
+    async getTodos() {
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/todo/list");
+        const data = await response.json();
+        console.log(data);
+        this.todos = data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 };
 </script>
@@ -24,5 +47,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.small-container {
+  max-width: 680px;
 }
 </style>
