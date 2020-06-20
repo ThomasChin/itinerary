@@ -1,17 +1,28 @@
 <template>
   <div id="app" class="small-container">
     <img alt="Vue logo" src="./assets/logo.png" />
+    <Header />
+    <AddTodo v-on:add-todo="addTodo" />
+    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
+    <!-- 
     <todo-table v-bind:todos="todos" />
+    -->
   </div>
 </template>
 
 <script>
-import TodoTable from "./components/TodoTable.vue";
+import Header from "./components/layout/Header.vue";
+import Todos from "./components/Todos.vue";
+import AddTodo from "./components/AddTodo.vue";
+// import TodoTable from "./components/TodoTable.vue";
 
 export default {
   name: "App",
   components: {
-    TodoTable
+    Todos,
+    Header,
+    AddTodo
+    // TodoTable
   },
 
   data() {
@@ -34,6 +45,14 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    addTodo(newTodo) {
+      this.todos = [...this.todos, newTodo];
+    },
+
+    deleteTodo(id) {
+      this.todos = this.todos.filter(todo => todo.id !== id);
     }
   }
 };
@@ -50,5 +69,14 @@ export default {
 }
 .small-container {
   max-width: 680px;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  background: #555;
+  color: #fff;
+  padding: 7px 20px;
+  cursor: pointer;
 }
 </style>
