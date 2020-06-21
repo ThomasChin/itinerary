@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import uuid from "uuid";
 export default {
   name: "AddTodo",
   data() {
@@ -18,10 +17,30 @@ export default {
   },
 
   methods: {
-    addTodo(e) {
+    async addTodo(e) {
       e.preventDefault();
+
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/todo/list", {
+          method: "post",
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({
+            description: this.description,
+            notes: "",
+            deadline: null,
+            complete: false
+          })
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+
       const newTodo = {
-        id: uuid.v4(),
+        id: this.id,
         description: this.description,
         complete: false
       };
@@ -29,6 +48,17 @@ export default {
       // Send up to parent
       this.$emit("add-todo", newTodo);
       this.description = "";
+    },
+
+    async getTodos() {
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/todo/list");
+        const data = await response.json();
+        console.log(data);
+        this.todos = data;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };
