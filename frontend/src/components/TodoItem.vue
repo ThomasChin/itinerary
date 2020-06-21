@@ -14,9 +14,31 @@ export default {
   name: "TodoItem",
   props: ["todo"],
   methods: {
-    // NOTE: Does not change DB data!!!
-    markComplete() {
-      this.todo.complete = !this.todo.complete;
+    async markComplete() {
+      try {
+        const completed = this.todo.complete;
+
+        const response = await fetch(
+          `http://localhost:8000/api/v1/todo/${this.todo.id}`,
+          {
+            method: "put",
+            headers: {
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+              description: this.todo.description,
+              notes: this.todo.notes,
+              deadline: this.todo.deadline,
+              complete: !completed
+            })
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        this.todo.complete = !this.todo.complete;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

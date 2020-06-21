@@ -51,8 +51,17 @@ export default {
       this.todos = [...this.todos, newTodo];
     },
 
-    deleteTodo(id) {
-      this.todos = this.todos.filter(todo => todo.id !== id);
+    async deleteTodo(id) {
+      try {
+        console.log(
+          await fetch(`http://localhost:8000/api/v1/todo/${id}`, {
+            method: "delete"
+          })
+        );
+        this.todos = this.todos.filter(todo => todo.id !== id);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

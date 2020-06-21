@@ -48,17 +48,6 @@ export default {
       // Send up to parent
       this.$emit("add-todo", newTodo);
       this.description = "";
-    },
-
-    async getTodos() {
-      try {
-        const response = await fetch("http://localhost:8000/api/v1/todo/list");
-        const data = await response.json();
-        console.log(data);
-        this.todos = data;
-      } catch (error) {
-        console.log(error);
-      }
     }
   }
 };

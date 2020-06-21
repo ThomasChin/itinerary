@@ -28,10 +28,9 @@ class TodoListView(generics.ListCreateAPIView):
         return Response(TodoSerializer(todo).data, status=status.HTTP_201_CREATED)
 
 
-class TodoDetailView(generics.RetrieveUpdateAPIView):
+class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TodoSerializer
     lookup_url_kwarg = "todo_id"
 
     def get_queryset(self):
         return Todo.objects.all()
-
