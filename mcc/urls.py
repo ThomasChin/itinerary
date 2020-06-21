@@ -1,4 +1,4 @@
-"""itinerary URL Configuration
+"""mcc URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/todo", include("itinerary.todo.urls", namespace="todo")),
+    path("api/v1/todo", include("mcc.todo.urls", namespace="todo")),
 ]

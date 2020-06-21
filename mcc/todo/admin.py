@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from itinerary.todo.models import Todo
+from mcc.todo.models import Todo
 
 
 class TodoAdmin(admin.ModelAdmin):

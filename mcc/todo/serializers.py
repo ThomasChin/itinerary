@@ -1,8 +1,8 @@
 from rest_framework.fields import BooleanField, CharField, DateTimeField, IntegerField
 from rest_framework.serializers import ModelSerializer, Serializer
 
-from itinerary.todo.models import Todo
-from itinerary.users.models import User
+from mcc.todo.models import Todo
+from mcc.users.models import User
 
 
 class TodoSerializer(ModelSerializer):

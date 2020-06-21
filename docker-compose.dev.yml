@@ -30,8 +30,8 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - './frontend/src/:/usr/src/itinerary/frontend/src/'
-      - './frontend/public/:/usr/src/itinerary/frontend/public/'
-      - './frontend/package.json:/usr/src/itinerary/frontend/package.json'
-      - './frontend/package-lock.json:/usr/src/itinerary/frontend/package-lock.json'
-      - './frontend/babel.config.js:/usr/src/itinerary/frontend/babel.config.js'
+      - './frontend/src/:/usr/src/mcc/frontend/src/'
+      - './frontend/public/:/usr/src/mcc/frontend/public/'
+      - './frontend/package.json:/usr/src/mcc/frontend/package.json'
+      - './frontend/package-lock.json:/usr/src/mcc/frontend/package-lock.json'
+      - './frontend/babel.config.js:/usr/src/mcc/frontend/babel.config.js'

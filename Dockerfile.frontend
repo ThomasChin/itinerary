@@ -2,7 +2,7 @@
 FROM node:14.3.0-alpine
 
 # set working directory
-WORKDIR /usr/src/itinerary/frontend
+WORKDIR /usr/src/mcc/frontend
 
 # install and cache app dependencies
 COPY frontend/package.json .

@@ -3,9 +3,9 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 
 
-from itinerary.todo.models import Todo
-from itinerary.todo.serializers import CreateTodoSerializer, TodoSerializer
-from itinerary.users.models import User
+from mcc.todo.models import Todo
+from mcc.todo.serializers import CreateTodoSerializer, TodoSerializer
+from mcc.users.models import User
 
 
 class TodoListView(generics.ListCreateAPIView):
@@ -26,3 +26,12 @@ class TodoListView(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         todo = serializer.save()
         return Response(TodoSerializer(todo).data, status=status.HTTP_201_CREATED)
+
+
+class TodoDetailView(generics.RetrieveUpdateAPIView):
+    serializer_class = TodoSerializer
+    lookup_url_kwarg = "todo_id"
+
+    def get_queryset(self):
+        return Todo.objects.all()
+

@@ -1,7 +1,7 @@
 from django.db import models
 
-from itinerary.models import TimeStampedModel
-from itinerary.users.models import User
+from mcc.models import TimeStampedModel
+from mcc.users.models import User
 
 
 class Todo(TimeStampedModel):
