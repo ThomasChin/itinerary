@@ -8,11 +8,13 @@ class TodoAdmin(admin.ModelAdmin):
     list_display = (
         "user",
         "description",
-        "complete",
+        "done",
         "notes",
         "deadline",
         "created",
         "updated",
+        "started_at",
+        "finished_at",
     )
 
 

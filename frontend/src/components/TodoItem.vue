@@ -1,10 +1,18 @@
 <template>
-  <div class="todo-item" v-bind:class="{'is-complete':todo.complete}">
+  <div class="todo-item" v-bind:class="{'is-complete':todo.done}">
+    <button @click="$emit('del-todo', todo.id)" class="del">x</button>
     <p>
-      <input type="checkbox" v-on:change="markComplete" />
+      <b>Todo:</b>
       {{todo.description}}
-      <button @click="$emit('del-todo', todo.id)" class="del">x</button>
+      <br />
+      <b>Notes:</b>
+      {{todo.notes}}
+      <br />
+      <b>Deadline:</b>
+      {{todo.deadline}}
+      <br />
     </p>
+    <button @click="markComplete" class="btn btn-success">DONE</button>
   </div>
 </template>
 
@@ -16,7 +24,7 @@ export default {
   methods: {
     async markComplete() {
       try {
-        const completed = this.todo.complete;
+        const done = this.todo.done;
 
         const response = await fetch(
           `http://localhost:8000/api/v1/todo/${this.todo.id}`,
@@ -29,13 +37,13 @@ export default {
               description: this.todo.description,
               notes: this.todo.notes,
               deadline: this.todo.deadline,
-              complete: !completed
+              done: !done
             })
           }
         );
         const data = await response.json();
         console.log(data);
-        this.todo.complete = !this.todo.complete;
+        this.todo.done = !this.todo.done;
       } catch (error) {
         console.log(error);
       }

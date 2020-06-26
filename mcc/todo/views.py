@@ -2,7 +2,6 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-
 from mcc.todo.models import Todo
 from mcc.todo.serializers import CreateTodoSerializer, TodoSerializer
 from mcc.users.models import User

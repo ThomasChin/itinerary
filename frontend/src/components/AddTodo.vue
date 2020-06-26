@@ -19,7 +19,6 @@ export default {
   methods: {
     async addTodo(e) {
       e.preventDefault();
-
       try {
         const response = await fetch("http://localhost:8000/api/v1/todo/list", {
           method: "post",
@@ -30,7 +29,7 @@ export default {
             description: this.description,
             notes: "",
             deadline: null,
-            complete: false
+            done: false
           })
         });
         const data = await response.json();
@@ -42,7 +41,7 @@ export default {
       const newTodo = {
         id: this.id,
         description: this.description,
-        complete: false
+        done: false
       };
 
       // Send up to parent

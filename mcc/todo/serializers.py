@@ -8,14 +8,14 @@ from mcc.users.models import User
 class TodoSerializer(ModelSerializer):
     class Meta:
         model = Todo
-        fields = ("id", "description", "notes", "deadline", "complete")
+        fields = ("id", "description", "notes", "deadline", "done")
 
 
 class CreateTodoSerializer(Serializer):
     description = CharField()
     notes = CharField(allow_blank=True)
     deadline = DateTimeField(required=False, allow_null=True)
-    complete = BooleanField(default=False)
+    done = BooleanField(default=False)
     user = IntegerField()
 
     def create(self, validated_data):
@@ -23,7 +23,7 @@ class CreateTodoSerializer(Serializer):
             description=validated_data["description"],
             notes=validated_data["notes"],
             deadline=validated_data["deadline"],
-            complete=validated_data["complete"],
+            done=validated_data["done"],
             user=User.objects.get(id=validated_data["user"]),
         )
         todo.save()
