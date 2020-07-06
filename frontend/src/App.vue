@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="small-container">
-    <img alt="Vue logo" src="./assets/logo.png" />
+    <img alt="Vue logo" src="rocketship.jpg" />
     <Header />
     <AddTodo v-on:add-todo="addTodo" />
     <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />

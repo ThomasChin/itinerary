@@ -2,22 +2,21 @@
   <div class="todo-item" v-bind:class="{'is-complete':todo.done}">
     <button @click="$emit('del-todo', todo.id)" class="del">x</button>
     <p>
-      <b>Todo:</b>
-      {{todo.description}}
+      <b>Todo: {{todo.description}}</b>
       <br />
-      <b>Notes:</b>
-      {{todo.notes}}
+      <b>Notes: {{todo.notes}}</b>
       <br />
-      <b>Deadline:</b>
-      {{todo.deadline}}
+      <b v-if="todo.deadline != null">Deadline: {{formatDeadline(todo)}}</b>
       <br />
     </p>
-    <button @click="markComplete" class="btn btn-success">DONE</button>
+    <button @click="markComplete" class="button-success pure-button">DONE</button>
   </div>
 </template>
 
 
 <script>
+import moment from "moment";
+
 export default {
   name: "TodoItem",
   props: ["todo"],
@@ -47,6 +46,13 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    formatDeadline(todo) {
+      if (todo.deadline != null) {
+        var formatted = moment(todo.deadline);
+        return formatted;
+      }
     }
   }
 };
@@ -64,12 +70,16 @@ export default {
 }
 
 .del {
-  background: #ff0000;
+  background: #ff6166;
   color: #fff;
   border: none;
   padding: 5px 9px;
   border-radius: 50%;
   cursor: pointer;
   float: right;
+}
+
+.button-success {
+  background: #8cff8a;
 }
 </style>
