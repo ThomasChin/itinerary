@@ -3,10 +3,7 @@
     <img alt="Vue logo" src="rocketship.jpg" />
     <Header />
     <AddTodo v-on:add-todo="addTodo" />
-    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
-    <!-- 
-    <todo-table v-bind:todos="todos" />
-    -->
+    <Todos v-bind:todos="todos" v-on:edit-todo="updateTodo" v-on:del-todo="deleteTodo" />
   </div>
 </template>
 
@@ -47,8 +44,52 @@ export default {
       }
     },
 
-    addTodo(newTodo) {
-      this.todos = [...this.todos, newTodo];
+    async addTodo(newTodo) {
+      const { description, notes } = newTodo;
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/todo/list", {
+          method: "post",
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({
+            description: description,
+            notes: notes,
+            deadline: null,
+            done: false
+          })
+        });
+        const data = await response.json();
+        console.log(data);
+        this.todos = [...this.todos, data];
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async updateTodo(todo) {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/v1/todo/${todo.id}`,
+          {
+            method: "put",
+            headers: {
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+              description: todo.description,
+              notes: todo.notes,
+              deadline: todo.deadline,
+              done: false
+            })
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        this.todos = [...this.todos];
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     async deleteTodo(id) {

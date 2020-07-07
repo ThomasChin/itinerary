@@ -2,6 +2,7 @@
   <div>
     <form @submit="addTodo">
       <input type="text" v-model="description" name="title" placeholder="Add Todo..." />
+      <input type="text" v-model="notes" name="title" placeholder="Notes..." />
       <input type="submit" value="Submit" class="btn" />
     </form>
   </div>
@@ -12,41 +13,25 @@ export default {
   name: "AddTodo",
   data() {
     return {
-      description: ""
+      description: "",
+      notes: ""
     };
   },
 
   methods: {
-    async addTodo(e) {
+    addTodo(e) {
       e.preventDefault();
-      try {
-        const response = await fetch("http://localhost:8000/api/v1/todo/list", {
-          method: "post",
-          headers: {
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify({
-            description: this.description,
-            notes: "",
-            deadline: null,
-            done: false
-          })
-        });
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-
       const newTodo = {
         id: this.id,
         description: this.description,
+        notes: this.notes,
         done: false
       };
 
       // Send up to parent
       this.$emit("add-todo", newTodo);
       this.description = "";
+      this.notes = "";
     }
   }
 };

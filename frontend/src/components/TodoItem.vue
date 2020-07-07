@@ -1,15 +1,35 @@
 <template>
-  <div class="todo-item" v-bind:class="{'is-complete':todo.done}">
+  <div class="todo-item">
     <button @click="$emit('del-todo', todo.id)" class="del">x</button>
     <p>
-      <b>Todo: {{todo.description}}</b>
+      <b v-bind:class="{'is-complete':todo.done}">TODO: &nbsp;</b>
+      <b v-if="editing === todo.id">
+        <input type="text" v-model="todo.description" />
+      </b>
+      <b v-else v-bind:class="{'is-complete':todo.done}">{{todo.description}}</b>
       <br />
-      <b>Notes: {{todo.notes}}</b>
+      <b v-bind:class="{'is-complete':todo.done}">Notes: &nbsp;</b>
+      <b v-if="editing === todo.id">
+        <input type="text" v-model="todo.notes" />
+      </b>
+      <b v-else v-bind:class="{'is-complete':todo.done}">{{todo.notes}}</b>
       <br />
-      <b v-if="todo.deadline != null">Deadline: {{formatDeadline(todo)}}</b>
+      <b
+        v-if="todo.deadline != null"
+        v-bind:class="{'is-complete':todo.done}"
+      >Deadline: {{formatDeadline(todo)}}</b>
       <br />
     </p>
-    <button @click="markComplete" class="button-success pure-button">DONE</button>
+    <b v-if="editing === todo.id">
+      <button @click="edit(todo)" class="button-save pure-button">Save</button>
+      &Tab;
+      <button class="button-cancel pure-button" @click="editing = null">Cancel</button>
+    </b>
+    <b v-else>
+      <button @click="editMode(todo.id)" class="button-edit pure-button">EDIT</button>
+      &Tab;
+      <button @click="markComplete" class="button-success pure-button">DONE</button>
+    </b>
   </div>
 </template>
 
@@ -20,7 +40,22 @@ import moment from "moment";
 export default {
   name: "TodoItem",
   props: ["todo"],
+  data() {
+    return {
+      editing: null
+    };
+  },
   methods: {
+    editMode(id) {
+      this.editing = id;
+    },
+
+    edit(todo) {
+      if (todo.description === "") return;
+      this.$emit("edit-todo", todo);
+      this.editing = null;
+    },
+
     async markComplete() {
       try {
         const done = this.todo.done;
@@ -81,5 +116,17 @@ export default {
 
 .button-success {
   background: #8cff8a;
+}
+
+.button-edit {
+  background: #69f5ff;
+}
+
+.button-save {
+  background: #69f5ff;
+}
+
+.button-cancel {
+  background: #ff7063;
 }
 </style>
