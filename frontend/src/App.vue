@@ -120,7 +120,8 @@ export default {
   width: 50%;
 }
 .small-container {
-  max-width: 680px;
+  max-width: 640px;
+  min-width: 640px;
 }
 
 .btn {

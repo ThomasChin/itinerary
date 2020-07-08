@@ -1,6 +1,13 @@
 <template>
   <header class="header">
     <h1>Mission Control Center</h1>
+    <b>Timers:</b>
+    <br />
+    <input type="submit" value="Pomodoro" class="btn" />
+    &Tab;
+    <input type="submit" value="CodeBuddy" class="btn" />
+    <br />
+    <br />
   </header>
 </template>
 
