@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/todo", include("mcc.todo.urls", namespace="todo")),
+    path("api/v1/users", include("mcc.users.urls", namespace="users")),
 ]

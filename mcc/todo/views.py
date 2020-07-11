@@ -11,16 +11,17 @@ class TodoListView(generics.ListCreateAPIView):
     serializer_class = TodoSerializer
 
     def get_queryset(self):
-        # TODO: Return to filter by User once we figure out Auth stuff.
-        return Todo.objects.all()
-
-        # if self.request.user.is_anonymous:
-        #     return None
-        # return Todo.objects.filter(user=self.request.user)
+        return (
+            None
+            if self.request.user.is_anonymous
+            else Todo.objects.filter(user__email=self.request.user)
+        )
 
     def create(self, request, *args, **kwargs):
-        # TODO: Filter by user once User System is implemented.
-        request.data["user"] = User.objects.get(email="tchin10@outlook.com").id
+        if self.request.user.is_anonymous:
+            return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
+
+        request.data["user"] = User.objects.get(email=self.request.user).id
         serializer = CreateTodoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         todo = serializer.save()
@@ -32,4 +33,8 @@ class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
     lookup_url_kwarg = "todo_id"
 
     def get_queryset(self):
-        return Todo.objects.all()
+        return (
+            None
+            if self.request.user.is_anonymous
+            else Todo.objects.filter(user__email=self.request.user)
+        )
