@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 @api_view(["POST"])
 def login_view(request):
+    # TODO: Refactor to use OAuth 2.0
     user = authenticate(email=request.data["email"], password=request.data["password"])
     if user is not None:
         # A backend authenticated the credentials

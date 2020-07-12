@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework import generics, status
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
 from mcc.todo.models import Todo
@@ -8,6 +9,7 @@ from mcc.users.models import User
 
 
 class TodoListView(generics.ListCreateAPIView):
+    permissions_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = TodoSerializer
 
     def get_queryset(self):
@@ -29,8 +31,9 @@ class TodoListView(generics.ListCreateAPIView):
 
 
 class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = TodoSerializer
     lookup_url_kwarg = "todo_id"
+    permissions_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+    serializer_class = TodoSerializer
 
     def get_queryset(self):
         return (
