@@ -88,13 +88,14 @@ POSTGRES_NAME = os.environ.get("POSTGRES_DB", "postgres")
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "db")
 POSTGRES_PORT = os.environ.get("POSTGRES_PORT", "5432")
 POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")
+POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "postgres")
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": POSTGRES_NAME,
         "USER": POSTGRES_USER,
-        "PASSWORD": "",
+        "PASSWORD": POSTGRES_PASSWORD,
         "HOST": POSTGRES_HOST,
         "PORT": POSTGRES_PORT,
     }
@@ -134,7 +135,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ("http://localhost:8080",)
+CORS_ORIGIN_WHITELIST = ("http://localhost:3001", "http://localhost:3000")
 
 OAUTH2_PROVIDER = {
     # this is the list of available scopes

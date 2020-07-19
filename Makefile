@@ -41,7 +41,7 @@ migrate:
 
 .PHONY: pg_isready
 pg_isready:
-	$(compose) exec db /bin/bash -c "until pg_isready; do sleep 2 ; done; sleep 2"
+	$(compose) exec db /bin/sh -c "until pg_isready; do sleep 2 ; done; sleep 2"
 
 .PHONY: up
 up:

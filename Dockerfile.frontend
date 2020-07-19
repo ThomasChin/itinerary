@@ -4,13 +4,12 @@ FROM node:14.3.0-alpine
 # set working directory
 WORKDIR /usr/src/mcc/frontend
 
+# add to PATH
+ENV PATH /usr/src/mcc/frontend/node_modules/.bin:$PATH
+
 # install and cache app dependencies
 COPY frontend/package.json .
-COPY frontend/package-lock.json .
 RUN npm install
-RUN npm install @vue/cli@4.4.1 -g
+RUN npm install react-scripts@3.4.1
 COPY frontend/src/ ./src/
 COPY frontend/public/ ./public/
-
-# start app
-CMD ["npm", "run", "serve"]
