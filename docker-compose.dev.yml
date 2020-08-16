@@ -1,8 +1,10 @@
-version: "3"
+version: "3.7"
 
 services:
   db:
     image: postgres
+    env_file:
+      - pg.dev.env
 
   web:
     build: 
@@ -22,16 +24,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
-    command: npm run serve
+    command: npm start 
     environment:
       - CHOKIDAR_USEPOLLING=true
     ports:
-      - '8080:8080'
+      - '3000:3000'
     tty: true
     stdin_open: true
     volumes:
       - './frontend/src/:/usr/src/mcc/frontend/src/'
       - './frontend/public/:/usr/src/mcc/frontend/public/'
       - './frontend/package.json:/usr/src/mcc/frontend/package.json'
-      - './frontend/package-lock.json:/usr/src/mcc/frontend/package-lock.json'
-      - './frontend/babel.config.js:/usr/src/mcc/frontend/babel.config.js'
+      - './frontend/package.json:/usr/src/mcc/frontend/yarn.lock'
